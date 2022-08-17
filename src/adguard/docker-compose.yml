@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: always
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      # Dashboard
+      - "3001:3000/tcp"
+      - "8080:80/tcp"
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ./data/work:/opt/adguardhome/work
+      - ./data/conf:/opt/adguardhome/conf
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

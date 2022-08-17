@@ -1,0 +1,21 @@
+version: "3"
+services:
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: jc21/nginx-proxy-manager:2
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+  reverse-proxy-db:
+    image: "jc21/mariadb-aria:latest"
+    container_name: reverse-proxy-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "npm"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
